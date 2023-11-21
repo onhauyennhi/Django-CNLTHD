@@ -11,7 +11,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path("auth/", include("auth_app.urls"), name="auth_app"),
     path("products/", include("products.urls"), name="products"),
-    path("cart/", include('cart.urls'), name='cart')
+    path("cart/", include('cart.urls'), name='cart'),
+    path("checkout/", include('checkout.urls'), name='checkout')
 ]
 
 if settings.DEBUG:

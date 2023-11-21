@@ -3,6 +3,18 @@ from django.shortcuts import render
 from cart.models import Cart, CartItem
 from products.models import Product, SizeVariant, ColorVariant
 from django.contrib import messages
+from django import template
+
+register = template.Library()
+
+@register.filter
+def multiply(value, arg):
+    return value * arg
+
+@register.filter
+def add(value, arg):
+    return value + arg
+
 
 def add_to_cart(request, product_id):
     variant = request.GET.get('variant')
@@ -126,7 +138,8 @@ def cart(request):
         )
         context = {
             'cart': cart,
-            'cart_items': cart_items_list
+            'cart_items': cart_items_list,
+            'total_price': cart[0].get_cart_total()
         }
         return render(request, 'cart/cart.html', context=context)
     except Cart.DoesNotExist:
